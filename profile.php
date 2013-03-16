@@ -40,6 +40,36 @@
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
                                    <link rel="shortcut icon" href="/assets/ico/favicon.png">
+	<script language="javascript">
+		function unlock() {
+			document.getElementById('input05').disabled=false;
+			document.getElementById('input04').disabled=false;
+			document.getElementById('input03').disabled=false;
+			document.getElementById('input02').disabled=false;
+			document.getElementById('input06').disabled=false;
+			document.getElementById('textarea').disabled=false;
+		}
+		
+		function lock() {
+			document.getElementById('input05').disabled=true;
+			document.getElementById('input04').disabled=true;
+			document.getElementById('input03').disabled=true;
+			document.getElementById('input02').disabled=true;
+			document.getElementById('input06').disabled=true;
+			document.getElementById('textarea').disabled=true;
+		}
+		
+		function toggle() {
+			if(document.getElementById('input02').disabled == false) {
+				lock();
+				document.getElementById('key').innerHTML="<i class='icon-lock'></i> Unlock";
+			}                                  
+			else {                             
+				unlock();                      
+				document.getElementById('key').innerHTML="<i class='icon-lock'></i> Lock";
+			}
+		}
+	</script>
   </head>
 
   <body>
@@ -56,7 +86,7 @@
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
 				<img src="/assets/img/examples/browser-icon-chrome.png" height="30" width="30" class="img-circle"></img>
-              Logged in as <a href="#" class="navbar-link">Username</a>
+              Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
@@ -91,67 +121,53 @@
         <div class="span9 pull-right well">
             <h2>Your Profile</h2>
         </div><!--/span-->
+		<?php if(isset($_GET['done'])) echo '<div class="span9 pull-right alert alert-success fade in"><button data-dismiss="alert" class="close" type="button">×</button><strong>Success!</strong> Your changes are preserved.</div>'; ?>
 		<div class="span9 pull-right well">
-            <form class="form-horizontal">
+			<div class="span3 pull-right well">
+				<button class="btn btn-primary" onclick="toggle()" id="key"><i class="icon-lock"></i> Unlock</button>
+			</div>
+            <form class="form-horizontal" action="update.php" method="POST">
 				<fieldset>
-					<legend>Edit required details</legend>
-					<div class="control-group">
-						<label class="control-label" for="input01">Username</label>
-						<div class="controls">
-							<div class="input-append">
-								<input type="text" class="input-xlarge" id="input01" disabled></input>
-								<button class="btn btn-primary" type="button" onclick="document.getElementById('input01').disabled=false">Edit</button>
-							</div>
-						</div>
-					</div>
-					
-					<div class="control-group">
-						<label class="control-label" for="input02">Email</label>
-						<div class="controls">
-							<div class="input-append">
-								<input type="email" class="input-xlarge" id="input02" disabled></input>
-								<button class="btn btn-primary" type="button" onclick="document.getElementById('input02').disabled=false">Edit</button>
-							</div>
-						</div>
-					</div>
-					
-					<div class="control-group">
-						<label class="control-label" for="input03">Password</label>
-						<div class="controls">
-							<div class="input-append">
-								<input type="password" class="input-xlarge" id="input03" onchange="document.getElementById('input04').disabled=false" disabled></input>
-								<button class="btn btn-primary" type="button" onclick="document.getElementById('input03').disabled=false">Edit</button>
-							</div>
-						</div>
-					</div>
-					
-					<div class="control-group">
-						<label class="control-label" for="input04">Retype Password</label>
-						<div class="controls">
-							<div class="input-append">
-								<input type="password" class="input-xlarge" id="input04" disabled></input>
-								<button class="btn btn-primary" type="button" onclick="document.getElementById('input04').disabled=false">Edit</button>
-							</div>
-						</div>
-					</div>
-					
+					<legend>Edit Profile</legend>		
 					<div class="control-group">
 						<label class="control-label" for="input05">First name</label>
 						<div class="controls">
-							<div class="input-append">
-								<input type="text" class="input-xlarge" id="input05" disabled></input>
-								<button class="btn btn-primary" type="button" onclick="document.getElementById('input05').disabled=false">Edit</button>
-							</div>
+							<input type="text" class="input-xlarge span7" name="fname" id="input05" value="<?php echo $auth->getUser(); ?>" disabled></input>
 						</div>
 					</div>
 					
 					<div class="control-group">
 						<label class="control-label" for="input06">Last name</label>
 						<div class="controls">
-							<div class="input-append">
-								<input type="text" class="input-xlarge" id="input06" disabled></input>
-								<button class="btn btn-primary" type="button" onclick="document.getElementById('input06').disabled=false;">Edit</button>
-							</div>
+							<input type="text" class="input-xlarge span7" name="lname" id="input06" value="<?php echo $auth->getlname(); ?>"disabled></input>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input02">Email</label>
+						<div class="controls">
+							<input type="email" class="input-xlarge span7" name="email" id="input02" value="<?php echo $auth->getEmail(); ?>" disabled></input>						
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input03">Password</label>
+						<div class="controls">
+							<input type="password" class="input-xlarge span7" name="password" id="input03" onchange="document.getElementById('input04').disabled=false" disabled></input>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input04">Retype Password</label>
+						<div class="controls">
+							<input type="password" class="input-xlarge span7" id="input04" disabled></input>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input07">Bio</label>
+						<div class="controls">
+							<textarea class="input-xlarge span7" id="textarea" rows="5" name="bio" disabled><?php echo $auth->getBio(); ?></textarea>
 						</div>
 					</div>
 					<div class="form-actions">

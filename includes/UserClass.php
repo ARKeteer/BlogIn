@@ -197,7 +197,7 @@
 			$this->sqltemp="SELECT user_id FROM logged_in_member WHERE session_id='".session_id()."';";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			$this->selection=mysqli_fetch_row($this->temp);
-			$this->sqltemp="UPDATE users SET bio='".$newname."' WHERE id = '".$this->selection[0]."';";
+			$this->sqltemp="UPDATE users SET biography='".$newname."' WHERE id = '".$this->selection[0]."';";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			return $this->temp;
 		}
