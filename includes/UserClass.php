@@ -19,10 +19,7 @@
 		
 		/* Function that returns random string(?) */
 		private function randomString() {
-			$this->temp=$_COOKIE['rand'];
-			$rand=md5($this->temp);
-			$this->temp=$rand;
-			setcookie("rand",$rand);
+			$rand=md5(microtime(true));
 			return $rand;
 		}
 		
@@ -51,7 +48,7 @@
 			$user_salt = $this->randomString();
 			$password = $user_salt . $password;
 			$password = $this->hashData($password);
-			$code = $this->randomString();
+			//$code = $this->randomString();
 			$this->sqltemp="INSERT INTO users (fname, email, password, user_salt) VALUES ('".$name."','".$email."','".$password."','".$user_salt."')";
 			$created = mysqli_query($this->con,$this->sqltemp);
 			if($created != false){

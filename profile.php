@@ -65,7 +65,7 @@
 				<li><a href="dashboard.php">Overview</a></li>
 				<li class="nav-header">Settings</li>
 				<li class="active"><a href="profile.php">Profile</a></li>
-				<li><a href="#readlist">Reading list</a></li>
+				<li><a href="readlist.php">Reading list</a></li>
 				<li class="nav-header">Your blogs</li>
 				<li><a href="newblog.php">Create new blog</a></li>
 				<li><a href="#">Blog 1</a></li>

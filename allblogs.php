@@ -24,11 +24,11 @@
     <![endif]-->
 
     <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="/assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../../assets/ico/favicon.png">
   </head>
 
   <body>
@@ -44,7 +44,7 @@
           <a class="brand" href="#">BlogIn</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-				<img src="/assets/img/examples/browser-icon-chrome.png" height="30" width="30" class="img-circle"></img>
+				<img src="/assets/ico/apple-touch-icon-114-precomposed/examples/browser-icon-chrome.png" height="30" width="30"></img>
               Logged in as <a href="#" class="navbar-link">Username</a>
             </p>
             <ul class="nav">
@@ -61,129 +61,95 @@
       <div class="row-fluid">
         <!-- Do not edit this div except marking any list item as active -->
 		<div class="span3 affix">
-          <div class="well sidebar-nav">
+          <div class="well">
             <ul class="nav nav-list bs-docs-sidenav">
-				<li class="active"><a href="#">Overview</a></li>
-				<li class="nav-header">Settings</li>
-				<li><a href="profile.php">Profile</a></li>
-				<li><a href="readlist.php">Reading list</a></li>
-				<li class="nav-header">Your blogs</li>
-				<li><a href="newblog.php">Create new blog</a></li>
-				<li><a href="#">Blog 1</a></li>
-				<li><a href="#">Blog 2</a></li>
-				<li><a href="#">Blog 3</a></li>
-				<li><a href="#">Blog 4</a></li>
-				<li><a href="#">Blog 5</a></li>
-				<li><a href="#">Blog 6</a></li>
+				<li class="nav-header">Posts</li>
+				<li class="active"><a href="#">All posts</a></li>
+				<li><a href="#">Add new</a></li>
+				<li><a href="#">Categories</a></li>
+				<li><a href="#">Tags</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
-        <div class="span9 well pull-right" data-spy="affix" data-offset-top="200">
-            <h2>Dashboard</h2>
+        <div class="span9 well pull-right">
+			<h2>Blog1</h2>
         </div><!--/span-->
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Your profile</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<a class="btn btn-primary pull-right" href="profile.php">Edit profile</a>
-				</div>
-			</div>
-			
-			<br>
-			<div class="row-fluid">
-				<div class="span2">
-					<img src="\assets\img\bird.png" class="img-circle" align="center" height="150" width="150" border="1"></img></br>
-				</div>
-				<div class="span8">
-					<div class="pull-left">
-						<p>Name : Your Name</p>
-						<p>Email : abc@host.dom</p>
-						<p>About : Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-						<p>Nickname : nick</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Blog1</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<button class="btn btn-primary pull-right">Edit settings</button>
-				</div>
-			</div>
-			<div class="tabbable" id="blog1"> <!-- Only required for left/right tabs -->
-				<ul class="nav nav-pills">
-					<li class="active"><a href="#blog1_tab1" data-toggle="tab">Stats</a></li>
-					<li><a href="#blog1_tab2" data-toggle="tab">Comments</a></li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="blog1_tab1">
-					<p>Your new pageviews and graphs go here.</p>
-					</div>
-					<div class="tab-pane" id="blog1_tab2">
-					<p>New and First 3 comments will go here.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Blog2</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<button class="btn btn-primary pull-right">Edit settings</button>
-				</div>
-			</div>
-			<div class="tabbable" id="blog3"> <!-- Only required for left/right tabs -->
-				<ul class="nav nav-pills">
-					<li class="active"><a href="#blog2_tab1" data-toggle="tab">Stats</a></li>
-					<li><a href="#blog2_tab2" data-toggle="tab">Comments</a></li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="blog2_tab1">
-					<p>Your new pageviews and graphs go here.</p>
-					</div>
-					<div class="tab-pane" id="blog2_tab2">
-					<p>New and First 3 comments will go here.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Blog3</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<button class="btn btn-primary pull-right">Edit settings</button>
-				</div>
-			</div>
-			<div class="tabbable"> <!-- Only required for left/right tabs -->
-				<ul class="nav nav-pills">
-					<li class="active"><a href="#blog3_tab1" data-toggle="tab">Stats</a></li>
-					<li><a href="#blog3_tab2" data-toggle="tab">Comments</a></li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="blog3_tab1">
-					<p>Your new pageviews and graphs go here.</p>
-					</div>
-					<div class="tab-pane" id="blog3_tab2">
-					<p>New and First 3 comments will go here.</p>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div class="span9 well pull-right">
+			<h3>Posts</h3>
+			<form class ="form-inline">				   
+				<select name="date">
+					<option value="-1" selected="selected">
+						Show all dates
+					</option>
+					<option name="php_gen">
+						php generated dates
+					</option>
+				</select>
+				<select name="Categories">
+					<option value="-1" selected="selected">
+						Show all Categories
+					</option>
+					<option name="php_gen">
+						php generated Categories
+					</option>
+				</select>
+				<button class="btn btn-primary">
+					Filter
+				</button>
+			</form>
+					
+			<table class="table table-bordered table-hover">
+			<thead>
+			<tr>
+				<th><input type="checkbox" id="select_all"</th>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Categories</th>
+				<th>Tags</th>
+				<th>Comment</th>
+				<th>Date</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td><input type="checkbox" id="check01"></td>
+				<td>Hello</td>
+				<td>Me</td>
+				<td>Uncategorised</td>
+				<td>-</td>
+				<td>Bye</td>
+				<td>April 2013</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" id="check01"></td>
+				<td>Hello</td>
+				<td>Me</td>
+				<td>Uncategorised</td>
+				<td>-</td>
+				<td>Bye</td>
+				<td>April 2013</td>
+			</tr>
+		</tbody>
+  </table>				
+			<form class="form-inline">
+				<select name= "action" >
+					<option selected="selected" value="-1">
+						Bulk Actions
+					</option>
+					<option value="edit">
+						Edit
+					</option>
+					<option value="trash">
+						Move to Trash
+					</option>
+				</select>
+				<button class="btn btn-primary" type="submit">
+					<!--<i class="icon-ok icon-white"></i>-->
+					Apply
+				</button>
+			</form>
+        </div>
       </div><!--/row-->
-
       <hr>
 
 <!-- DO NOT EDIT BELOW -->

@@ -65,10 +65,10 @@
 				</form>
 			  </li>
             </ul>
-            <form class="navbar-form pull-right" method="post" action="dashboard.php">
-              <input class="span2" type="email" placeholder="Email" required>
-              <input class="span2" type="password" placeholder="Password" required>
-              <button type="submit" class="btn btn-primary" href="dashboard.php">Sign in</button>
+            <form class="navbar-form pull-right form-inline" method="post" action="dashboard.php">
+				<input class="span2" type="email" placeholder="Email" required>
+				<input class="span2" type="password" placeholder="Password" required>
+				<button type="submit" class="btn btn-primary" href="dashboard.php">Sign in</button>
             </form>
           </div><!--/.nav-collapse -->
         </div>
@@ -76,9 +76,12 @@
     </div>
 
     <div class="container">
-
-      <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit">
+<?php if(isset($_GET['login'])) {
+echo '<div class="alert alert-success fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Please login to continue.</div> ';
+}
+?>
+    <!-- Main hero unit for a primary marketing message or call to action -->
+    <div class="hero-unit">
         <h2>Hello, world!</h2>
         <p>Welcome to next generation blogging site. Get your blog right now in 3 simple steps</p>
 		<ol>
@@ -131,25 +134,25 @@
 					<div class="control-group">
 						<label class="control-label" for="input01">Name</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" id="input01">
+							<input type="text" class="input-xlarge" id="input01" name="name">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label h3" for="input02">Email</label>
 						<div class="controls">
-							<input type="email" class="input-xlarge" id="input02">
+							<input type="email" class="input-xlarge" id="input02" name="email">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label h3" for="input03">Password</label>
 						<div class="controls">
-							<input type="password" class="input-xlarge" id="input03">
+							<input type="password" class="input-xlarge" id="input03" name="password">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label h3" for="input04">Retype Password</label>
 						<div class="controls">
-							<input type="password" class="input-xlarge" id="input04">
+							<input type="password" class="input-xlarge" id="input04" name="retype_paswwd">
 						</div>
 					</div>
 					<div class="control-group">
