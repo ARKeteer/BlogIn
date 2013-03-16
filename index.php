@@ -1,12 +1,14 @@
 ﻿<!DOCTYPE html>
 <?php
+	ob_start();
 	require_once('includes/UserClass.php');
 	$auth = new Auth();
 	$check = $auth->checkSession();
-	if($check) {
+	if($check == 1) {
 		header("Location: dashboard.php");
 		exit;
 	}
+	ob_end_clean();
 ?>
 <html lang="en">
   <head>
@@ -62,7 +64,7 @@
 				</form>
 			  </li>
             </ul>
-            <form class="navbar-form pull-right" method="post" action="dashboard.php">
+            <form class="navbar-form pull-right" method="post" action="login.php">
 				<input class="span2" name="email" type="email" placeholder="Email" required>
 				<input class="span2" name="password" type="password" placeholder="Password" required>
 				<button type="submit" class="btn btn-primary">Sign in</button>
@@ -75,6 +77,10 @@
     <div class="container">
 <?php if(isset($_GET['login'])) {
 echo '<div class="alert alert-success fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Please login to continue.</div> ';
+}
+?>
+<?php if(isset($_GET['logfail'])) {
+echo '<div class="alert alert-error fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> It seems that you mistyped your username or password.</div> ';
 }
 ?>
     <!-- Main hero unit for a primary marketing message or call to action -->

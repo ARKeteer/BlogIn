@@ -34,6 +34,7 @@
 			{
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
 			}
+			session_start();
 		}
 		
 		/* Using hash_hmac and sha512 algo this will hash data */
@@ -65,7 +66,7 @@
 			
 			$password = $this->selection['user_salt'] . $password;
 			$password = $this->hashData($password);
-				
+			$match=false;	
 			//Check email and password hash match database row
 			if($email = $this->selection['email'] AND $password = $this->selection['password']) {
 				$match=true;
@@ -80,7 +81,6 @@
 				//Build the token
 				$token = $_SERVER['HTTP_USER_AGENT'] . $random;
 				$token = $this->hashData($token);
-				session_destroy();
 				//Setup sessions vars
 				session_start();
 				$_SESSION['token'] = $token;
@@ -96,10 +96,10 @@
 				
 				//Logged in
 				if($inserted != false) {
-					return 0;
+					return true;
 				} 
 			}
-			return 1;
+			return false;
 		}
 		
 		public function checkSession()
@@ -113,10 +113,17 @@
 			if($select) {
 				//Check ID and Token
 				if(session_id() == $select['session_id'] && $_SESSION['token'] == $select['token']) {
-					return true;
+					return 1;
 				}
 			}
-			return false;
+			return 0;
+		}
+		
+		private function getUID() {
+			$this->sqltemp="SELECT user_id FROM logged_in_member WHERE session_id='".session_id()."';";
+			$this->temp=mysqli_query($this->con,$this->sqltemp);
+			$this->selection=mysqli_fetch_row($this->temp);
+			return $this->selection;
 		}
 		
 		public function getUser() {
@@ -209,3 +216,4 @@
 		}
 		
 	}
+?>

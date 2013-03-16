@@ -1,4 +1,15 @@
 ﻿<!DOCTYPE html>
+<?php
+	ob_start();
+	require_once("includes/UserClass.php");
+	$auth = new Auth();
+	$check=$auth->checkSession();
+	if($check == 0) {
+		header("Location: index.php");
+		exit;
+	}
+	ob_end_clean();
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">

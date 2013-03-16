@@ -1,4 +1,15 @@
 ﻿<!DOCTYPE html>
+<?php
+	ob_start();
+	require_once("includes/UserClass.php");
+	$auth = new Auth();
+	$check=$auth->checkSession();
+	if($check == 0) {
+		header("Location: index.php");
+		exit;
+	}
+	ob_end_clean();
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -45,7 +56,7 @@
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
 				<img src="/assets/img/examples/browser-icon-chrome.png" height="30" width="30" class="img-circle"></img>
-              Logged in as <a href="#" class="navbar-link">Username</a>
+              Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
@@ -99,10 +110,9 @@
 				</div>
 				<div class="span8">
 					<div class="pull-left">
-						<p>Name : Your Name</p>
-						<p>Email : abc@host.dom</p>
+						<p>Name : <?php echo $auth->getUser()." ".$auth->getLname(); ?></p>
+						<p>Email : <?php echo $auth->getEmail(); ?></p>
 						<p>About : Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-						<p>Nickname : nick</p>
 					</div>
 				</div>
 			</div>
