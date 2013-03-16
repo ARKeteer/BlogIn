@@ -95,7 +95,7 @@
 			<br>
 			<div class="row-fluid">
 				<div class="span2">
-					<img src="\assets\img\bird.png" class="img-circle" align="center" height="150" width="150" border="1"></img></br>
+					<img src="/assets/img/bird.png" class="img-circle" align="center" height="150" width="150" border="1"></img></br>
 				</div>
 				<div class="span8">
 					<div class="pull-left">
