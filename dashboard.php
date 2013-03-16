@@ -106,7 +106,7 @@
 			<br>
 			<div class="row-fluid">
 				<div class="span2">
-					<img src="/assets/img/bird.png" class="img-circle" align="center" height="150" width="150" border="1"></img></br>
+					<img data-src="holder.js/126x126" class="img-circle" align="center" height="126" width="126" border="1"></img></br>
 				</div>
 				<div class="span8">
 					<div class="pull-left">
@@ -265,6 +265,7 @@
     <script src="/assets/js/bootstrap-collapse.js"></script>
     <script src="/assets/js/bootstrap-carousel.js"></script>
     <script src="/assets/js/bootstrap-typeahead.js"></script>
+    <script src="/assets/js/holder/holder.js"></script>
 
   </body>
 </html>
