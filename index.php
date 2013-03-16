@@ -1,7 +1,16 @@
 ﻿<!DOCTYPE html>
+<?php
+	require_once('includes/UserClass.php');
+	$auth = new Auth();
+	$check = $auth->checkSession();
+	if($check) {
+		header("Location: dashboard.php");
+		exit;
+	}
+?>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+	<meta charset="utf-8">
     <title>BlogIn : Next generation blogging site</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -46,18 +55,6 @@
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#about" role="button" data-toggle="modal">About</a></li>
               <li><a href="#contact" role="button" data-toggle="modal">Contact</a></li>
-              <!--<li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li class="nav-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li> -->
 			  <li>
 				<form class="form-search navbar-form">
 					<input type="text" class="span2 search-query" placeholder="Find blogs">
@@ -65,10 +62,10 @@
 				</form>
 			  </li>
             </ul>
-            <form class="navbar-form pull-right form-inline" method="post" action="dashboard.php">
-				<input class="span2" type="email" placeholder="Email" required>
-				<input class="span2" type="password" placeholder="Password" required>
-				<button type="submit" class="btn btn-primary" href="dashboard.php">Sign in</button>
+            <form class="navbar-form pull-right" method="post" action="dashboard.php">
+				<input class="span2" name="email" type="email" placeholder="Email" required>
+				<input class="span2" name="password" type="password" placeholder="Password" required>
+				<button type="submit" class="btn btn-primary">Sign in</button>
             </form>
           </div><!--/.nav-collapse -->
         </div>
@@ -92,25 +89,7 @@ echo '<div class="alert alert-success fade in"><button type="button" class="clos
         <p><a class="btn btn-primary" href="#signup" role="button" data-toggle="modal" ><i class="icon-user icon-white"> </i>&nbsp;Sign up now &raquo;</a></p>
       </div>
 
-      <!-- Example row of columns 
-      <div class="row">
-        <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-        </div>
-        <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-       </div>
-        <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-        </div>
-      </div>
--->
+
       <hr>
 
       <footer>
