@@ -93,11 +93,14 @@
 		}
 	
 		public function isAuthor($uid,$blog_id) {
+			ob_start();
 			$this->sqltemp="SELECT `authors`.`author_id` FROM authors WHERE `blog_id`=".$blog_id." AND `author_id`=".$uid.";";
 			$result=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
 			if(is_null($result)) {
+				ob_end_clean();
 				return false;
 			}
+			ob_end_clean();
 			return true;
 		}
 	}

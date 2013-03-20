@@ -72,21 +72,22 @@
       <div class="row-fluid">
         <!-- Do not edit this div except marking any list item as active -->
 		<div class="span3 affix">
-          <div class="well">
-            <ul class="nav nav-list bs-docs-sidenav">
-				<li class="nav-header">Posts</li>
-				<li class="active"><a href="#">All posts</a></li>
-				<li><a href="#">Add new</a></li>
-				<li><a href="#">Categories</a></li>
-				<li><a href="#">Tags</a></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
+			<div class="well text-center">
+				<h2>Blog Name</h2>
+			</div>
+			<div class="well sidebar-nav bs-docs-sidenav">
+				<ul class="nav nav-list">
+					<li class="nav-header">Posts</li>
+					<li class="active"><a href="posts.php">All posts</a></li>
+					<li><a href="postnew.php">Add new</a></li>
+					
+				</ul>
+			</div><!--/.well -->
+        </div>
         <div class="span9 well pull-right">
-			<h2>Blog1</h2>
+			<h3>All Posts</h3>
         </div><!--/span-->
 		<div class="span9 well pull-right">
-			<h3>Posts</h3>
 			<form class ="form-inline">				   
 				<select name="date">
 					<option value="-1" selected="selected">

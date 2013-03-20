@@ -80,7 +80,7 @@ echo '<div class="alert alert-success fade in"><button type="button" class="clos
 }
 ?>
 <?php if(isset($_GET['logfail'])) {
-echo '<div class="alert alert-error fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> It seems that you mistyped your username or password.</div> ';
+echo '<div class="alert alert-error fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> It seems that you did some serious mistake.</div> ';
 }
 ?>
     <!-- Main hero unit for a primary marketing message or call to action -->

@@ -1,15 +1,4 @@
 ﻿<!DOCTYPE html>
-<?php
-	ob_start();
-	require_once("includes/UserClass.php");
-	$auth = new Auth();
-	$check=$auth->checkSession();
-	if($check == 0) {
-		header("Location: index.php");
-		exit;
-	}
-	ob_end_clean();
-?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -35,11 +24,11 @@
     <![endif]-->
 
     <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="/assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../../assets/ico/favicon.png">
   </head>
 
   <body>
@@ -56,7 +45,7 @@
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
 				<img src="/assets/img/examples/browser-icon-chrome.png" height="30" width="30" class="img-circle"></img>
-              Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
+              Logged in as <a href="#" class="navbar-link">Username</a>
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
@@ -72,125 +61,68 @@
       <div class="row-fluid">
         <!-- Do not edit this div except marking any list item as active -->
 		<div class="span3 affix">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list bs-docs-sidenav">
-				<li class="active"><a href="#">Overview</a></li>
+          <div class="well sidebar-nav bs-docs-sidenav">
+            <ul class="nav nav-list">
+				<li><a href="#">Overview</a></li>
 				<li class="nav-header">Settings</li>
-				<li><a href="profile.php">Profile</a></li>
-				<li><a href="readlist.php">Reading list</a></li>
-				<li class="nav-header">Your blogs</li>
-				<li><a href="newblog.php">Create new blog</a></li>
-				<li><a href="#">Blog 1</a></li>
-				<li><a href="#">Blog 2</a></li>
-				<li><a href="#">Blog 3</a></li>
-				<li><a href="#">Blog 4</a></li>
-				<li><a href="#">Blog 5</a></li>
-				<li><a href="#">Blog 6</a></li>
+				<li class="active"><a href="#">Profile</a></li>
+				<li><a href="#readlist">Reading list</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
-        <div class="span9 well pull-right" data-spy="affix" data-offset-top="200">
-            <h2>Dashboard</h2>
+        <div class="span9 well pull-right">
+            <h2>Comments</h2>
         </div><!--/span-->
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Your profile</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<a class="btn btn-primary pull-right" href="profile.php">Edit profile</a>
-				</div>
-			</div>
-			<br>
-			<div class="row-fluid">
-				<div class="span2">
-					<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=127"; echo $grav_url; ?>" class="img-circle" align="center" height="126" width="126" border="1"></img></br>
-				</div>
-				<div class="span8">
-					<div class="pull-left">
-						<p>Name : <?php echo $auth->getUser()." ".$auth->getLname(); ?></p>
-						<p>Email : <?php echo $auth->getEmail(); ?></p>
-						<p><?php echo $auth->getBio(); ?></p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Blog1</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<button class="btn btn-primary pull-right">Edit settings</button>
-				</div>
-			</div>
-			<div class="tabbable" id="blog1"> <!-- Only required for left/right tabs -->
-				<ul class="nav nav-pills">
-					<li class="active"><a href="#blog1_tab1" data-toggle="tab">Stats</a></li>
-					<li><a href="#blog1_tab2" data-toggle="tab">Comments</a></li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="blog1_tab1">
-					<p>Your new pageviews and graphs go here.</p>
-					</div>
-					<div class="tab-pane" id="blog1_tab2">
-					<p>New and First 3 comments will go here.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Blog2</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<button class="btn btn-primary pull-right">Edit settings</button>
-				</div>
-			</div>
-			<div class="tabbable" id="blog3"> <!-- Only required for left/right tabs -->
-				<ul class="nav nav-pills">
-					<li class="active"><a href="#blog2_tab1" data-toggle="tab">Stats</a></li>
-					<li><a href="#blog2_tab2" data-toggle="tab">Comments</a></li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="blog2_tab1">
-					<p>Your new pageviews and graphs go here.</p>
-					</div>
-					<div class="tab-pane" id="blog2_tab2">
-					<p>New and First 3 comments will go here.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Blog3</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<button class="btn btn-primary pull-right">Edit settings</button>
-				</div>
-			</div>
-			<div class="tabbable"> <!-- Only required for left/right tabs -->
-				<ul class="nav nav-pills">
-					<li class="active"><a href="#blog3_tab1" data-toggle="tab">Stats</a></li>
-					<li><a href="#blog3_tab2" data-toggle="tab">Comments</a></li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="blog3_tab1">
-					<p>Your new pageviews and graphs go here.</p>
-					</div>
-					<div class="tab-pane" id="blog3_tab2">
-					<p>New and First 3 comments will go here.</p>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div class="span9 well pull-right">
+
+			<ul class="inline">
+				<li><a href="#">All</a> |</li>
+				<li><a href="#">Unapproved</a> |</li>
+				<li><a href="#">Approved</a> |</li>
+				<li><a href="#">Spam</a> |</li>
+				<li><a href="#">Trash</a> |</li>
+			</ul>
+			
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th><input type="checkbox" id="select_all"></th>
+						<th>Author</th>
+						<th>In response to</th>
+						<th>Comment</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="checkbox" id="check01"></td>
+						<td>Username</td>
+						<td>Post1</td>
+						<td>Right sadsadasdasdasdasd</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" id="check01"></td>
+						<td>Username</td>
+						<td>Post2</td>
+						<td>Maybe ccccxcxcsxdsfsf</td>
+					</tr>
+				</tbody>
+			</table>
+			
+ 			<form class="form-inline">
+				<select name="action">
+					<option value="-1" selected="selected">Select Option</option>
+					<option value="Approve">Approve</option>
+					<option value="Unapprove">Unapprove</option>
+					<option value="Mark as Spam">Mark as spam</option>
+					<option value="Mark as Trash">Mark as spam</option>
+				</select>
+				<button class="btn btn-primary" type="submit">
+					Apply
+				</button>
+			</form>
+			 
+  
+        </div>
       </div><!--/row-->
 
       <hr>
@@ -264,7 +196,6 @@
     <script src="/assets/js/bootstrap-collapse.js"></script>
     <script src="/assets/js/bootstrap-carousel.js"></script>
     <script src="/assets/js/bootstrap-typeahead.js"></script>
-    <script src="/assets/js/holder/holder.js"></script>
 
   </body>
 </html>

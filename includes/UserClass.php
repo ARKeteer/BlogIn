@@ -146,6 +146,13 @@
 			return $this->selection[0];
 		}
 		
+		public function getUserbyID($uid) {
+			$this->sqltemp="SELECT fname FROM users WHERE id=".$uid.";";
+			$this->temp=mysqli_query($this->con,$this->sqltemp);
+			$this->selection=mysqli_fetch_row($this->temp);
+			return $this->selection[0];
+		}
+		
 		public function getLname() {
 			$this->sqltemp="SELECT user_id FROM logged_in_member WHERE session_id='".session_id()."';";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
@@ -154,6 +161,17 @@
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			$this->selection=mysqli_fetch_row($this->temp);
 			return $this->selection[0];
+		}
+		
+		public function getLnamebyID($uid) {
+			$this->sqltemp="SELECT lname FROM users WHERE id=".$uid.";";
+			$this->temp=mysqli_query($this->con,$this->sqltemp);
+			$this->selection=mysqli_fetch_row($this->temp);
+			return $this->selection[0];
+		}
+		
+		public function getFullName($uid) {
+			return $this->getLnamebyID($uid)." ".$this->getUserbyID($uid);
 		}
 		
 		public function getEmail() {
@@ -227,6 +245,30 @@
 		
 		public function setquestion($quest,$ans) {
 			$this->sqltemp="UPDATE users SET question='".$quest."', answer='".$ans."' WHERE id='".$this->getUID()."'";
+			$this->temp=mysqli_query($this->con,$this->sqltemp);
+			return $this->temp;
+		}
+		
+		public function getQuest($email) {
+			$this->sqltemp="SELECT question FROM users WHERE email='".$email."';";
+			$this->temp=mysqli_query($this->con,$this->sqltemp);
+			$this->selection=mysqli_fetch_array($this->temp);
+			return $this->selection[0];
+		}
+		
+		public function getAns($email) {
+			$this->sqltemp="SELECT answer FROM users WHERE email='".$email."';";
+			$this->temp=mysqli_query($this->con,$this->sqltemp);
+			$this->selection=mysqli_fetch_array($this->temp);
+			return $this->selection[0];
+		}
+		
+		public function recoverpasswd($email,$newpwd) {
+			$this->sqltemp = "SELECT * FROM users where email = '".$email."';";			
+			$this->selection = mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
+			$password = $this->selection['user_salt'] . $newpwd;
+			$password = $this->hashData($password);
+			$this->sqltemp="UPDATE users SET password='".$password."' WHERE email = '".$email."';";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			return $this->temp;
 		}
