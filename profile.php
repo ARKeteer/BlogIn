@@ -48,6 +48,8 @@
 			document.getElementById('input02').disabled=false;
 			document.getElementById('input06').disabled=false;
 			document.getElementById('textarea').disabled=false;
+			document.getElementById('quest').disabled=false;
+			document.getElementById('ans').disabled=false;
 		}
 		
 		function lock() {
@@ -57,6 +59,8 @@
 			document.getElementById('input02').disabled=true;
 			document.getElementById('input06').disabled=true;
 			document.getElementById('textarea').disabled=true;
+			document.getElementById('quest').disabled=true;
+			document.getElementById('ans').disabled=true;
 		}
 		
 		function toggle() {
@@ -177,6 +181,33 @@
 				</fieldset>
 			</form>
         </div>
+		<div class="span9 pull-right well">
+			<form class="form-horizontal" action="savequestion.php" method="POST">
+				<fieldset>
+				
+					<legend>Security Question for password recovery</legend>
+					<div class="control-group">
+						<label class="control-label" for="input05">Desired question</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge span7" name="quest" id="quest" value="" disabled></input>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input06">Answer</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge span7" name="ans" id="ans" value=""disabled></input>
+						</div>
+					</div>
+					
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary">Save</button>
+						<button type="reset" class="btn">Cancel</button>
+					</div>
+					
+				</fieldset>
+			</form>
+		</div>
       </div><!--/row-->
 
       <hr>

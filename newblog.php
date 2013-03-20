@@ -93,34 +93,35 @@
             <h2>Create new blog</h2>
         </div><!--/span-->
 		<div class="span9 well pull-right">
-            <form class="form-horizontal well">
+            <form class="form-horizontal well" action="blognew.php" method="POST">
 				<fieldset>
 					<legend>Details for new blog</legend>
-					<div class="control-group">
+					<div class="control-group <?php if(isset($_GET['error'])) echo 'error'; ?>">
 						<label class="control-label" for="input01">Blog name</label>
 						<div class="controls">
-							<input type="text" class="input span5" id="input01">
+							<input type="text" class="input span5" id="input01" name="blogname"/>
+							<?php if(isset($_GET['error'])) echo '<span class="help-inline">Seems like blog name is not available.</span>'; ?>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="select01">Choose layout</label>
 						<div class="controls">
-							<select id="select01" class="span5">
-								<option>Widgets at right</option>
-								<option>Widgets at left</option>
-								<option>Widgets at bothsides</option>
-								<option>No widgets</option>
+							<select id="select01" class="span5" name="layout">
+								<option value="2">Widgets at right</option>
+								<option value="1">Widgets at left</option>
+								<option value="3">Widgets at bothsides</option>
+								<option value="0">No widgets</option>
 							</select>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="textarea">Blog description</label>
 						<div class="controls">
-							<textarea class="input-xlarge span9" id="textarea" rows="5"></textarea>
+							<textarea class="input-xlarge span9" id="textarea" rows="5" name="blog_desc"></textarea>
 						</div>
 					</div>
 					<div class="form-actions">
-						<button type="submit" class="btn btn-primary">Save changes</button>
+						<button type="submit" class="btn btn-primary">Create &raquo;</button>
 						<button type="reset" class="btn">Cancel</button>
 					</div>
 				</fieldset>

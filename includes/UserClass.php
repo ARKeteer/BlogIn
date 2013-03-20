@@ -34,7 +34,10 @@
 			{
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
 			}
-			session_start();
+			if(!isset($_SESSION)) 
+			{ 
+				session_start(); 
+			}
 		}
 		
 		/* Using hash_hmac and sha512 algo this will hash data */
@@ -119,11 +122,18 @@
 			return 0;
 		}
 		
-		private function getUID() {
+		public function getUID() {
 			$this->sqltemp="SELECT user_id FROM logged_in_member WHERE session_id='".session_id()."';";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			$this->selection=mysqli_fetch_row($this->temp);
-			return $this->selection;
+			return $this->selection[0];
+		}
+		
+		public function getUIDbyEmail($email) {
+			$this->sqltemp="SELECT id FROM users WHERE email='".$email."';";
+			$this->temp=mysqli_query($this->con,$this->sqltemp);
+			$this->selection=mysqli_fetch_row($this->temp);
+			return $this->selection[0];
 		}
 		
 		public function getUser() {
@@ -215,5 +225,10 @@
 			return $this->temp;
 		}
 		
+		public function setquestion($quest,$ans) {
+			$this->sqltemp="UPDATE users SET question='".$quest."', answer='".$ans."' WHERE id='".$this->getUID()."'";
+			$this->temp=mysqli_query($this->con,$this->sqltemp);
+			return $this->temp;
+		}
 	}
 ?>
