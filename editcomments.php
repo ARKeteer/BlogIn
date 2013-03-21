@@ -75,12 +75,12 @@
         </div><!--/span-->
 		<div class="span9 well pull-right">
 
-			<ul class="inline">
-				<li><a href="#">All</a> |</li>
-				<li><a href="#">Unapproved</a> |</li>
-				<li><a href="#">Approved</a> |</li>
-				<li><a href="#">Spam</a> |</li>
-				<li><a href="#">Trash</a> |</li>
+			<ul class="nav nav-pills">
+				<li class="nav-tabs"><a href="#">All</a></li>
+				<li class="nav-tabs"><a href="#">Unapproved</a></li>
+				<li class="nav-tabs"><a href="#">Approved</a></li>
+				<li class="nav-tabs"><a href="#">Spam</a></li>
+				<li class="nav-tabs"><a href="#">Trash</a></li>
 			</ul>
 			
 			<table class="table table-bordered table-hover">

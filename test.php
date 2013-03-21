@@ -6,12 +6,11 @@
 	echo "Welcome to sandboxed Testing console of Blogin.... <br>";
 	echo "This page will not provide UI so that you can easily test out your php codes <br>";
 	echo "Edit me and see change in output <br><br>";
-	
 	echo "Now lets try to add a new author in our blog.<br>";
 	$blog=new Blog();
 	$auth=new Auth();
 	$post=new Post();
-	
+	/*
 	//if($auth->getUID() == $blog->getOwner())
 	$result=$blog->addAuthor(6,$auth->getUIDbyEmail("aazam@gmail.com"));
 	echo $blog->getOwnerID(9)."<br>";
@@ -31,11 +30,12 @@
 	
 	echo $auth->getQuest(mysql_real_escape_string("bhush94@gmail.com"))."<br>";
 	
-	$post->createPost(6,10,"Lets try to post","Lorem Ipsum dollar sit amet");
 	echo "<br><br>".$post->getpostdata(1)."<br><br>"."<br><br>";
 	echo $post->getPostDate(1)." ".$post->getPostTime(1)."<br>";
 	echo $post->getAuthor(1)."<br>";
-	echo $auth->getFullName(12);
+	echo $auth->getFullName(12); */
+	echo $post->updatePost("TITLEPAGE","LOREM IPSUM DOLLAR SIT AMET",11);
+	
 	exit;
 	
 ?>

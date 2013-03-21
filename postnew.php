@@ -88,10 +88,10 @@
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="visual">
-								<textarea tooltip="Post Body" class="input-xlarge span9" name="post_content" rows="10"></textarea>
+								<textarea tooltip="Post Body" class="input-xlarge" name="post_content" rows="10" style="margin: 0px 0px 10px; width: 820px; height: 250px;"></textarea>
 							</div>
 							<div class="tab-pane" id="htmledit">
-								<textarea tooltip="Post Body" class="input-xlarge span9" name="post_html" rows="10"></textarea>
+								<textarea tooltip="Post Body" class="input-xlarge" name="post_html" rows="10" style="margin: 0px 0px 10px; width: 820px; height: 250px;"></textarea>
 							</div>
 						</div>
 					</div>

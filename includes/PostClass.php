@@ -62,8 +62,10 @@
 			return $this->auth->getFullName($result[0]);
 		}
 		
-		public function updatePost($blog_id,$is_draft,$title,$postdata,$postid) {
-			
+		public function updatePost($title,$postdata,$postid) {
+			$this->sqltemp="UPDATE `blogin`.`posts` SET `post_title` = '".$title."', `post_data` = '".$postdata."' WHERE `posts`.`post_id` = ".$postid.";";
+			$result=mysqli_query($this->con,$this->sqltemp);
+			return $result;
 		}
 	}
 ?>
