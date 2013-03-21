@@ -1,18 +1,13 @@
-﻿<!DOCTYPE html>
-<?php
-	ob_start();
-	require_once("includes/UserClass.php");
-	require_once("includes/PostClass.php");
+﻿<?php
+	require_once('includes/UserClass.php');
+	require_once('includes/BlogClass.php');
+	require_once('includes/PostClass.php');
 	
-	$auth = new Auth();
-	$post = new Post();
-	$check=$auth->checkSession();
-	if($check == 0) {
-		header("Location: index.php");
-		exit;
-	}
-	ob_end_clean();
+	$auth=new Auth();
+	$blog=new Blog();
+	$post=new Post();
 ?>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -30,7 +25,7 @@
       }
       
     </style>
-	<link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -58,9 +53,14 @@
           <a class="brand" href="#">BlogIn</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-				<img src="/assets/ico/apple-touch-icon-114-precomposed/examples/browser-icon-chrome.png" height="30" width="30"></img>
-              Logged in as <a href="#" class="navbar-link">Username</a>
+				<img src="/assets/img/examples/browser-icon-chrome.png" height="30" width="30" class="img-circle"></img>
+				Logged in as <a href="#" class="navbar-link">Username</a>
             </p>
+<!--			<form class="navbar-form pull-right" method="post" action="login.php">
+				<input class="span2" name="email" type="email" placeholder="Email" required>
+				<input class="span2" name="password" type="password" placeholder="Password" required>
+				<button type="submit" class="btn btn-primary">Sign in</button>
+            </form>-->
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#about" role="button" data-toggle="modal">About</a></li>
@@ -72,92 +72,38 @@
     </div>
 
     <div class="container-fluid">
-      <div class="row-fluid">
-        <!-- Do not edit this div except marking any list item as active -->
-		<div class="span3 affix">
-			<div class="well text-center">
-				<h2>Blog Name</h2>
+		<div class="hero-unit">
+			<h2><?php echo $blog->getName(mysql_real_escape_string($_GET['id'])); ?></h2>
+			<p><?php echo $blog->getAbout(mysql_real_escape_string($_GET['id'])); ?></p>
+		</div>
+		<div class="row-fluid">
+			<!-- Do not edit this div except marking any list item as active -->
+			<div class="span9 well pull-left">
+				<?php
+					$result=$post->getposts(mysql_real_escape_string($_GET['id']));
+					while($row = mysqli_fetch_array($result))
+					{
+						echo "<h3>".$row['post_title']."</h3><hr>";
+						echo $row['post_data']."<br>";
+					}
+				?>
 			</div>
-			<div class="well sidebar-nav bs-docs-sidenav">
-				<ul class="nav nav-list">
-					<li class="nav-header">Posts</li>
-					<li class="active"><a href="posts.php">All posts</a></li>
-					<li><a href="postnew.php">Add new</a></li>
-					
-				</ul>
-			</div><!--/.well -->
-        </div>
-        <div class="span9 well pull-right">
-			<h3>All Posts</h3>
-        </div><!--/span-->
-		<div class="span9 well pull-right">
-			<form class ="form-inline">				   
-				<select name="date">
-					<option value="-1" selected="selected">
-						Show all dates
-					</option>
-					<option name="php_gen">
-						php generated dates
-					</option>
-				</select>
-				<select name="Categories">
-					<option value="-1" selected="selected">
-						Show all Categories
-					</option>
-					<option name="php_gen">
-						php generated Categories
-					</option>
-				</select>
-				<button class="btn btn-primary">
-					Filter
-				</button>
-			</form>
-					
-			<table class="table table-bordered table-hover">
-				<thead>
-					<tr>
-						<th><input type="checkbox" id="select_all"></th>
-						<th>Title</th>
-						<th>Author</th>
-						<th>Comments</th>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-						$result=$post->getposts(mysql_real_escape_string($_GET['id']));
-						while($row = mysqli_fetch_array($result))
-						{
-							echo "<tr>";
-							echo "<td><input type='checkbox' id='check01'></td>";
-							echo "<td>".$row['post_title']."</td>";
-							echo "<td>".$row['author']."</td>";
-							echo "<td>3</td>";
-							echo "<td>".$row['post_date']."</td>";
-							echo "</tr>";
-						}
-					?>
-				</tbody>
-			</table>				
-			<form class="form-inline">
-				<select name= "action" >
-					<option selected="selected" value="-1">
-						Bulk Actions
-					</option>
-					<option value="edit">
-						Edit
-					</option>
-					<option value="trash">
-						Move to Trash
-					</option>
-				</select>
-				<button class="btn btn-primary" type="submit">
-					<!--<i class="icon-ok icon-white"></i>-->
-					Apply
-				</button>
-			</form>
-        </div>
-      </div><!--/row-->
+			<div class="span3 well pull-right">
+				Whatever
+			</div><!--/span-->
+			<div class="span3 well pull-right">
+				<!-- Content will Go here -->
+				Whatever
+			</div>
+		</div><!--/row-->
+		<ul class="pager">
+			<li class="next">
+				<a href="#" class="btn btn-primary">Older &rarr;</a>
+			</li>
+			<li class="previous disabled">
+				<a href="#" class="btn btn-primary">&larr; Newer</a>
+			</li>
+		</ul>
       <hr>
 
 <!-- DO NOT EDIT BELOW -->

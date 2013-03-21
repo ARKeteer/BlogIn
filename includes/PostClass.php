@@ -38,6 +38,12 @@
 			return false;
 		}
 		
+		public function getposttitle($postid) {
+			$this->sqltemp="SELECT `post_title` FROM posts WHERE `post_id`=".$postid;
+			$result=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
+			return $result[0];
+		}
+		
 		public function getpostdata($postid) {
 			$this->sqltemp="SELECT `post_data` FROM posts WHERE `post_id`=".$postid;
 			$result=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
@@ -66,6 +72,12 @@
 			$this->sqltemp="UPDATE `blogin`.`posts` SET `post_title` = '".$title."', `post_data` = '".$postdata."' WHERE `posts`.`post_id` = ".$postid.";";
 			$result=mysqli_query($this->con,$this->sqltemp);
 			return $result;
+		}
+
+		public function getposts($blogid) {
+			$this->sqltemp="SELECT * FROM posts WHERE `posts`.`parent_blog`=".$blogid." ORDER BY `post_date` DESC,`post_time` DESC;";
+			$this->selection=mysqli_query($this->con,$this->sqltemp);
+			return $this->selection;
 		}
 	}
 ?>

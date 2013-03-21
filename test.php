@@ -33,8 +33,20 @@
 	echo "<br><br>".$post->getpostdata(1)."<br><br>"."<br><br>";
 	echo $post->getPostDate(1)." ".$post->getPostTime(1)."<br>";
 	echo $post->getAuthor(1)."<br>";
-	echo $auth->getFullName(12); */
+	echo $auth->getFullName(12); 
 	echo $post->updatePost("TITLEPAGE","LOREM IPSUM DOLLAR SIT AMET",11);
+	
+	
+	$result=$blog->search("blog");
+	*/
+	$result=$post->getposts(6);
+	while($row = mysqli_fetch_array($result))
+			{
+				echo $row['post_title']."<br><br>";
+				echo $row['post_data']."<br><br>";
+			}
+	
+	
 	
 	exit;
 	

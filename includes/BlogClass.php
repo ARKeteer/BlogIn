@@ -52,6 +52,12 @@
 			$this->selection=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
 			return $this->selection[0];
 		}
+		
+		public function getAbout($blog_id) {
+			$this->sqltemp="SELECT description FROM blogs WHERE b_id=".$blog_id.";";
+			$this->selection=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
+			return $this->selection[0];
+		}
 				
 		/* Used to get all blogs of currently logged in user*/
 		public function getallblogs() {
@@ -103,6 +109,14 @@
 			ob_end_clean();
 			return true;
 		}
+		
+		public function search($searchterm) {
+			$this->sqltemp="SELECT`b_id`,`b_name`,`description` FROM `blogs` WHERE `b_name` LIKE '%".$searchterm."%' OR `description` LIKE '%".$searchterm."%';";
+			echo $this->sqltemp."<br>";
+			$this->selection=mysqli_query($this->con,$this->sqltemp);
+			return $this->selection;
+		}
+		
 	}
 		
 ?>
