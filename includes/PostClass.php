@@ -11,7 +11,7 @@
 		private $_auth;
 		private $_blogobj;
 		
-		/* Function that returns random (Really!?) string */
+		/* Function that returns random string */
 		private function randomString() {
 			$rand=md5(microtime(true));
 			return $rand;
@@ -31,7 +31,7 @@
 		
 		public function createPost($blog_id,$is_draft,$title,$postdata) {
 			if($this->blogobj->getOwnerID($blog_id) == $this->auth->getUID() || $this->blogobj->isAuthor($this->auth->getUID(),$blog_id)) {
-				$this->sqltemp="INSERT INTO `posts`(`post_title`,`post_data`,`is_draft`,`author`,`parent_blog`,`post_date`,`post_time`) VALUES('".$title."','".$postdata."',NULL,'".$this->auth->getUID()."','".$blog_id."',CURRENT_DATE(),CURRENT_TIME());";
+				$this->sqltemp="INSERT INTO `posts`(`post_title`,`post_data`,`is_draft`,`author`,`parent_blog`,`post_date`,`post_time`) VALUES('".mysql_real_escape_string($title)."','".mysql_real_escape_string($postdata)."',NULL,'".$this->auth->getUID()."','".mysql_real_escape_string($blog_id)."',CURRENT_DATE(),CURRENT_TIME());";
 				$result=mysqli_query($this->con,$this->sqltemp);
 				return $result;
 			}
@@ -39,43 +39,43 @@
 		}
 		
 		public function getposttitle($postid) {
-			$this->sqltemp="SELECT `post_title` FROM posts WHERE `post_id`=".$postid;
+			$this->sqltemp="SELECT `post_title` FROM posts WHERE `post_id`=".mysql_real_escape_string($post_id);
 			$result=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
 			return $result[0];
 		}
 		
 		public function getpostdata($postid) {
-			$this->sqltemp="SELECT `post_data` FROM posts WHERE `post_id`=".$postid;
+			$this->sqltemp="SELECT `post_data` FROM posts WHERE `post_id`=".mysql_real_escape_string($post_id);
 			$result=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
 			return $result[0];
 		}
 		
 		public function getPostTime($postid) {
-			$this->sqltemp="SELECT `post_time` FROM posts WHERE `post_id`=".$postid;
+			$this->sqltemp="SELECT `post_time` FROM posts WHERE `post_id`=".mysql_real_escape_string($post_id);
 			$result=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
 			return $result[0];
 		}
 		
 		public function getPostDate($postid) {
-			$this->sqltemp="SELECT `post_date` FROM posts WHERE `post_id`=".$postid;
+			$this->sqltemp="SELECT `post_date` FROM posts WHERE `post_id`=".mysql_real_escape_string($post_id);
 			$result=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
 			return $result[0];
 		}
 		
 		public function getAuthor($postid) {
-			$this->sqltemp="SELECT `author` FROM posts WHERE `post_id`=".$postid;
+			$this->sqltemp="SELECT `author` FROM posts WHERE `post_id`=".mysql_real_escape_string($post_id);
 			$result=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
 			return $this->auth->getFullName($result[0]);
 		}
 		
 		public function updatePost($title,$postdata,$postid) {
-			$this->sqltemp="UPDATE `blogin`.`posts` SET `post_title` = '".$title."', `post_data` = '".$postdata."' WHERE `posts`.`post_id` = ".$postid.";";
+			$this->sqltemp="UPDATE `blogin`.`posts` SET `post_title` = '".mysql_real_escape_string($title)."', `post_data` = '".mysql_real_escape_string($postdata)."' WHERE `posts`.`post_id` = ".mysql_real_escape_string($post_id).";";
 			$result=mysqli_query($this->con,$this->sqltemp);
 			return $result;
 		}
 
 		public function getposts($blogid) {
-			$this->sqltemp="SELECT * FROM posts WHERE `posts`.`parent_blog`=".$blogid." ORDER BY `post_date` DESC,`post_time` DESC;";
+			$this->sqltemp="SELECT * FROM posts WHERE `posts`.`parent_blog`=".mysql_real_escape_string($blogid)." ORDER BY `post_date` DESC,`post_time` DESC;";
 			$this->selection=mysqli_query($this->con,$this->sqltemp);
 			return $this->selection;
 		}

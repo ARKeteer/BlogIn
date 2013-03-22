@@ -53,7 +53,7 @@
 			$password = $user_salt . $password;
 			$password = $this->hashData($password);
 			//$code = $this->randomString();
-			$this->sqltemp="INSERT INTO users (fname, email, password, user_salt) VALUES ('".$name."','".$email."','".$password."','".$user_salt."')";
+			$this->sqltemp="INSERT INTO users (fname, email, password, user_salt) VALUES ('".mysql_real_escape_string($name)."','".mysql_real_escape_string($email)."','".mysql_real_escape_string($password)."','".mysql_real_escape_string($user_salt)."')";
 			$created = mysqli_query($this->con,$this->sqltemp);
 			if($created != false){
 				return true;
@@ -63,7 +63,7 @@
 		
 		public function login($email, $password)
 		{
-			$this->sqltemp = "SELECT * FROM users where email = '".$email."';";
+			$this->sqltemp = "SELECT * FROM users where email = '".mysql_real_escape_string($email)."';";
 			
 			$this->selection = mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
 			
@@ -94,7 +94,7 @@
 				$inserted=mysqli_query($this->con,$this->sqltemp);
 				
 				//Insert new logged_in_member record for user
-				$this->sqltemp="INSERT INTO logged_in_member (user_id, session_id, token) VALUES (".$this->selection['id'].",'".session_id()."','".$token."');";
+				$this->sqltemp="INSERT INTO logged_in_member (user_id, session_id, token) VALUES (".$this->selection['id'].",'".session_id()."','".mysql_real_escape_string($token)."');";
 				$inserted = mysqli_query($this->con,$this->sqltemp);
 				
 				//Logged in
@@ -130,7 +130,7 @@
 		}
 		
 		public function getUIDbyEmail($email) {
-			$this->sqltemp="SELECT id FROM users WHERE email='".$email."';";
+			$this->sqltemp="SELECT id FROM users WHERE email='".mysql_real_escape_string($email)."';";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			$this->selection=mysqli_fetch_row($this->temp);
 			return $this->selection[0];
@@ -147,7 +147,7 @@
 		}
 		
 		public function getUserbyID($uid) {
-			$this->sqltemp="SELECT fname FROM users WHERE id=".$uid.";";
+			$this->sqltemp="SELECT fname FROM users WHERE id=".mysql_real_escape_string($uid).";";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			$this->selection=mysqli_fetch_row($this->temp);
 			return $this->selection[0];
@@ -164,7 +164,7 @@
 		}
 		
 		public function getLnamebyID($uid) {
-			$this->sqltemp="SELECT lname FROM users WHERE id=".$uid.";";
+			$this->sqltemp="SELECT lname FROM users WHERE id=".mysql_real_escape_string($uid).";";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			$this->selection=mysqli_fetch_row($this->temp);
 			return $this->selection[0];
@@ -238,37 +238,37 @@
 			$this->selection = mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
 			$password = $this->selection['user_salt'] . $newpwd;
 			$password = $this->hashData($password);
-			$this->sqltemp="UPDATE users SET password='".$password."' WHERE id = '".$this->selection['id']."';";
+			$this->sqltemp="UPDATE users SET password='".mysql_real_escape_string($password)."' WHERE id = '".$this->selection['id']."';";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			return $this->temp;
 		}
 		
 		public function setquestion($quest,$ans) {
-			$this->sqltemp="UPDATE users SET question='".$quest."', answer='".$ans."' WHERE id='".$this->getUID()."'";
+			$this->sqltemp="UPDATE users SET question='".mysql_real_escape_string($quest)."', answer='".mysql_real_escape_string($ans)."' WHERE id='".$this->getUID()."'";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			return $this->temp;
 		}
 		
 		public function getQuest($email) {
-			$this->sqltemp="SELECT question FROM users WHERE email='".$email."';";
+			$this->sqltemp="SELECT question FROM users WHERE email='".mysql_real_escape_string($email)."';";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			$this->selection=mysqli_fetch_array($this->temp);
 			return $this->selection[0];
 		}
 		
 		public function getAns($email) {
-			$this->sqltemp="SELECT answer FROM users WHERE email='".$email."';";
+			$this->sqltemp="SELECT answer FROM users WHERE email='".mysql_real_escape_string($email)."';";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			$this->selection=mysqli_fetch_array($this->temp);
 			return $this->selection[0];
 		}
 		
 		public function recoverpasswd($email,$newpwd) {
-			$this->sqltemp = "SELECT * FROM users where email = '".$email."';";			
+			$this->sqltemp = "SELECT * FROM users where email = '".mysql_real_escape_string($email)."';";			
 			$this->selection = mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
 			$password = $this->selection['user_salt'] . $newpwd;
 			$password = $this->hashData($password);
-			$this->sqltemp="UPDATE users SET password='".$password."' WHERE email = '".$email."';";
+			$this->sqltemp="UPDATE users SET password='".mysql_real_escape_string($password)."' WHERE email = '".mysql_real_escape_string($email)."';";
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			return $this->temp;
 		}
