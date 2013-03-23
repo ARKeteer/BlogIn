@@ -4,7 +4,9 @@
 	require_once("../includes/UserClass.php");
 	require_once("../includes/PostClass.php");
 	require_once("../includes/BlogClass.php");
+	require_once("../includes/markdown.php");
 	require_once("config.php");
+	
 	
 	$auth = new Auth();
 	$post = new Post();
@@ -90,7 +92,7 @@
 					while($row = mysqli_fetch_array($result))
 					{
 						echo "<h3><a href='post.php?id=".$row['post_id']."'>".$row['post_title']."</a></h3><div class='pull-right'>".$row['post_date']." ".$row['post_time']."</div>"."<hr>";
-						echo $row['post_data']."<br>";
+						echo Markdown($row['post_data']."<br>");
 					}
 				?>
 			</div>

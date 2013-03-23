@@ -5,6 +5,7 @@
 	require_once("../includes/PostClass.php");
 	require_once("../includes/BlogClass.php");
 	require_once("../includes/CommentClass.php");
+	require_once("../includes/markdown.php");
 	require_once("config.php");
 	
 	$auth = new Auth();
@@ -91,7 +92,7 @@
 					$row=$post->getpost(mysql_real_escape_string($_GET['id']));
 					if($row['parent_blog']==$id) {
 						echo "<h3><a href='post.php?id=".$row['post_id']."'>".$row['post_title']."</a></h3><div class='pull-right'>".$row['post_date']." ".$row['post_time']."</div>"."<hr>";
-						echo $row['post_data']."<br>";
+						echo Markdown($row['post_data']."<br>");
 					}
 					else
 					{
