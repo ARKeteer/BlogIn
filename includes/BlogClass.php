@@ -17,6 +17,22 @@
 			return $rand;
 		}
 		
+		private function recurse_copy($src,$dst) { 
+			$dir = opendir($src); 
+			@mkdir($dst); 
+			while(false !== ( $file = readdir($dir)) ) { 
+				if (( $file != '.' ) && ( $file != '..' )) { 
+					if ( is_dir($src . '/' . $file) ) { 
+						recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+					} 
+					else { 
+						copy($src . '/' . $file,$dst . '/' . $file); 
+					} 
+				} 
+			} 
+			closedir($dir); 
+		} 
+		
 		public function __construct() {
 			
 			$this->auth=new Auth();
@@ -36,6 +52,10 @@
 			$blog_salt=$this->randomString();
 			$this->sqltemp="INSERT INTO blogs (b_name,b_layout,blogger_id,description,blog_salt) VALUES('".mysql_real_escape_string($blogname)."',".mysql_real_escape_string($layout).",".$this->auth->getUID().",'".mysql_real_escape_string($about)."','".mysql_real_escape_string($blog_salt)."');";
 			$result=mysqli_query($this->con,$this->sqltemp);
+			if($result) {
+				$this->recurse_copy('blog_data',$blogname);
+				fwrite($blogname."/config.php","<?php class blogConfig { private $_blogid=".$this->getID($blog_name)."; public function getBlogid() { return $this->blogid; } } ?>");
+			}
 			return $result;
 		}
 		
@@ -53,6 +73,12 @@
 			return $this->selection[0];
 		}
 		
+		public function getID($blog_name) {
+			$this->sqltemp="SELECT b_id FROM blogs WHERE b_name='".mysql_real_escape_string($blog_name)."';";
+			$this->selection=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
+			return $this->selection[0];
+		}
+		
 		public function getAbout($blog_id) {
 			$this->sqltemp="SELECT description FROM blogs WHERE b_id=".mysql_real_escape_string($blog_id).";";
 			$this->selection=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
@@ -62,8 +88,8 @@
 		/* Used to get all blogs of currently logged in user*/
 		public function getallblogs() {
 			$uid=$this->auth->getUID();
-			$this->sqltemp="SELECT b_id FROM blogs WHERE blogger_id=".mysql_real_escape_string($uid).";";
-			$this->selection=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
+			$this->sqltemp="SELECT * FROM blogs WHERE blogger_id=".mysql_real_escape_string($uid).";";
+			$this->selection=mysqli_query($this->con,$this->sqltemp);
 			return $this->selection;
 		}
 		

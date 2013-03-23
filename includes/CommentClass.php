@@ -38,14 +38,40 @@
 			return $result;
 		}
 		
-		public function updateComment($c_id,$commentdata) {
-			$this->sqltemp="UPDATE `blogin`.`comments` SET `comment_data`='".$commentdata."' WHERE  `comments`.`comment_id`=".$c_id.";";
+		public function deleteComment($comment_id) {
+			$this->sqltemp="DELETE FROM `blogin`.`comments` WHERE `comments`.`comment_id` = ".$comment_id.";";
 			$result=mysqli_query($this->con,$this->sqltemp);
 			return $result;
 		}
 		
-		public function deleteComment($comment_id) {
-			
+		public function getComments($postid) {
+			$this->sqltemp="SELECT * FROM `blogin`.`comments` WHERE `comments`.`parent_post`=".mysql_real_escape_string($postid).";";
+			$this->selection=mysqli_query($this->con,$this->sqltemp);
+			return $this->selection;
+		}
+		
+		public function getComment($c_id) {
+			$this->sqltemp="SELECT * FROM `blogin`.`comments` WHERE `comments`.`comment_id`=".mysql_real_escape_string($postid).";";
+			$this->selection=mysqli_query($this->con,$this->sqltemp);
+			return $this->selection;
+		}
+		
+		public function voteup($commentid) {
+			$result=$this->getComment($c_id);
+			$this->temp=mysql_fetch_array($result);
+			$temp=$this->temp['marked_up']+1;
+			$this->sqltemp="UPDATE `blogin`.`comments` SET `marked_up`=".$temp." WHERE `comments`.`comment_id`=".$c_id.";";
+			$result=mysqli_query($this->con,$this->sqltemp);
+			return $result;
+		}
+		
+		public function votedown($commentid) {
+			$result=$this->getComment($c_id);
+			$this->temp=mysql_fetch_array($result);
+			$temp=$this->temp['marked_down']+1;
+			$this->sqltemp="UPDATE `blogin`.`comments` SET `marked_down`=".$temp." WHERE `comments`.`comment_id`=".$c_id.";";
+			$result=mysqli_query($this->con,$this->sqltemp);
+			return $result;
 		}
 	}
 	

@@ -44,10 +44,10 @@
 			return $result[0];
 		}
 		
-		public function getpostdata($postid) {
-			$this->sqltemp="SELECT `post_data` FROM posts WHERE `post_id`=".mysql_real_escape_string($post_id);
+		public function getpost($postid) {
+			$this->sqltemp="SELECT * FROM posts WHERE `post_id`=".mysql_real_escape_string($postid);
 			$result=mysqli_fetch_array(mysqli_query($this->con,$this->sqltemp));
-			return $result[0];
+			return $result;
 		}
 		
 		public function getPostTime($postid) {

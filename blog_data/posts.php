@@ -1,21 +1,29 @@
 ﻿<!DOCTYPE html>
 <?php
 	ob_start();
-	require_once("includes/UserClass.php");
-	require_once("includes/BlogClass.php");
+	require_once("../includes/UserClass.php");
+	require_once("../includes/PostClass.php");
+	require_once("../includes/BlogClass.php");
+	require_once("config.php");
+	
 	$auth = new Auth();
+	$post = new Post();
 	$blog = new Blog();
+	$thisblog = new BlogConfig();
+	$name=$thisblog->getBid();
+	$id=$blog->getID($name);
 	$check=$auth->checkSession();
-	if($check == 0) {
-		header("Location: index.php");
+	if($check == 0 OR $auth->getUID() != $blog->getOwnerID($id)) {
+		header("Location: /index.php");
 		exit;
 	}
+	
 	ob_end_clean();
 ?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>BlogIn : Dashboard</title>
+    <title>BlogIn : All Posts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -29,7 +37,7 @@
       }
       
     </style>
-    <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -37,11 +45,11 @@
     <![endif]-->
 
     <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="/assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../../assets/ico/favicon.png">
   </head>
 
   <body>
@@ -57,8 +65,8 @@
           <a class="brand" href="#">BlogIn</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-				<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=30"; echo $grav_url; ?>" height="30" width="30"></img>
-              Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
+				<img src="/assets/ico/apple-touch-icon-114-precomposed/examples/browser-icon-chrome.png" height="30" width="30"></img>
+              Logged in as <a href="#" class="navbar-link">Username</a>
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
@@ -74,83 +82,64 @@
       <div class="row-fluid">
         <!-- Do not edit this div except marking any list item as active -->
 		<div class="span3 affix">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list bs-docs-sidenav">
-				<li class="active"><a href="#">Overview</a></li>
-				<li class="nav-header">Settings</li>
-				<li><a href="profile.php">Profile</a></li>
-				<li class="nav-header">Your blogs</li>
-				<li><a href="newblog.php">Create new blog</a></li>
-				<?php
-					$result=$blog->getallblogs();
-					while($row = mysqli_fetch_array($result))
-					{
-						echo '<li><a href="/'.$row['b_name'].'">'.$row['b_name']."</a></li>";
-					}
-				?>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9 well pull-right" data-spy="affix" data-offset-top="200">
-            <h2>Dashboard</h2>
-        </div><!--/span-->
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Your profile</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<a class="btn btn-primary pull-right" href="profile.php">Edit profile</a>
-				</div>
+			<div class="well text-center">
+				<h2><?php echo $blog->getName(mysql_real_escape_string($id)); ?></h2>
 			</div>
-			<br>
-			<div class="row-fluid">
-				<div class="span2">
-					<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=127"; echo $grav_url; ?>" class="img-circle" align="center" height="126" width="126" border="1"></img></br>
-				</div>
-				<div class="span8">
-					<div class="pull-left">
-						<p>Name : <?php echo $auth->getUser()." ".$auth->getLname(); ?></p>
-						<p>Email : <?php echo $auth->getEmail(); ?></p>
-						<p><?php echo $auth->getBio(); ?></p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<?php
-			$result=$blog->getallblogs();
-			while($row = mysqli_fetch_array($result))
-			{
-				echo '<div class="span9 pull-right well">';
-				echo '<div class="row-fluid">';
-				echo '<div class="span9">';
-				echo '<h3>'.$row["b_name"].'</h3>';
-				echo '</div>';
-				echo '<div class="span3">';
-				echo '<br>';
-				echo '<a class="btn btn-primary pull-right" href="'.$row['b_name'].'/settings.php">Edit settings</a>';
-				echo '</div>';
-				echo '</div>';
-				echo '<div class="tabbable" id="'.$row['b_name'].'"> <!-- Only required for left/right tabs -->';
-				echo '<ul class="nav nav-pills">';
-				echo '<li class="active"><a href="#'.$row['b_name'].'_tab1" data-toggle="tab">Stats</a></li>';
-				echo '<li><a href="#'.$row['b_name'].'_tab2" data-toggle="tab">Comments</a></li>';
-				echo '</ul>';
-				echo '<div class="tab-content">';
-				echo '<div class="tab-pane active" id="'.$row['b_name'].'_tab1">';
-				echo '<p>Your new pageviews and graphs go here.</p>';
-				echo '</div>';
-				echo '<div class="tab-pane" id="'.$row['b_name'].'_tab2">';
-				echo '<p>New and First 3 comments will go here.</p>';
-				echo '</div>';
-				echo '</div>';
-				echo '</div>';
-				echo '</div>';
-			}
-		?>
-		</div><!--/row-->
-
+			<div class="well sidebar-nav bs-docs-sidenav">
+				<ul class="nav nav-list">
+					<li class="nav-header">Posts</li>
+					<li class="active"><a href="posts.php">All posts</a></li>
+					<li><a href="postnew.php">Add new</a></li>
+					
+				</ul>
+			</div><!--/.well -->
+        </div>
+        <div class="span9 well pull-right">
+			<h3>All Posts</h3>
+        </div><!--/span-->
+		<div class="span9 well pull-right">		
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th><input type="checkbox" id="select_all"></th>
+						<th>Title</th>
+						<th>Author</th>
+						<th>Date</th>
+						<th>Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+						$result=$post->getposts(mysql_real_escape_string($id));
+						while($row = mysqli_fetch_array($result))
+						{
+							echo "<tr>";
+							echo "<td><input type='checkbox' id='check01'></td>";
+							echo "<td>".$row['post_title']."</td>";
+							echo "<td>".$auth->getUserbyID($row['author'])."</td>";
+							echo "<td>".$row['post_date']."</td>";
+							echo "<td>".$row['post_time']."</td>";
+							echo "</tr>";
+						}
+					?>
+				</tbody>
+			</table>				
+			<form class="form-inline">
+				<select name= "action" >
+					<option selected="selected" value="-1">
+						Bulk Actions
+					</option>
+					<option value="trash">
+						Move to Trash
+					</option>
+				</select>
+				<button class="btn btn-primary" type="submit">
+					<i class="icon-ok icon-white"></i>
+					Apply
+				</button>
+			</form>
+        </div>
+      </div><!--/row-->
       <hr>
 
 <!-- DO NOT EDIT BELOW -->
@@ -222,7 +211,6 @@
     <script src="/assets/js/bootstrap-collapse.js"></script>
     <script src="/assets/js/bootstrap-carousel.js"></script>
     <script src="/assets/js/bootstrap-typeahead.js"></script>
-    <script src="/assets/js/holder/holder.js"></script>
 
   </body>
 </html>

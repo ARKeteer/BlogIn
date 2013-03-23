@@ -2,7 +2,9 @@
 <?php
 	ob_start();
 	require_once("includes/UserClass.php");
+	require_once("includes/BlogClass.php");
 	$auth = new Auth();
+	$blog = new Blog();
 	$check=$auth->checkSession();
 	if($check == 0) {
 		header("Location: index.php");
@@ -89,7 +91,7 @@
           <a class="brand" href="#">BlogIn</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-				<img src="/assets/img/examples/browser-icon-chrome.png" height="30" width="30" class="img-circle"></img>
+				<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=30"; echo $grav_url; ?>" height="30" width="30"></img>
               Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
             </p>
             <ul class="nav">
@@ -110,15 +112,15 @@
 				<li><a href="dashboard.php">Overview</a></li>
 				<li class="nav-header">Settings</li>
 				<li class="active"><a href="profile.php">Profile</a></li>
-				<li><a href="readlist.php">Reading list</a></li>
 				<li class="nav-header">Your blogs</li>
 				<li><a href="newblog.php">Create new blog</a></li>
-				<li><a href="#">Blog 1</a></li>
-				<li><a href="#">Blog 2</a></li>
-				<li><a href="#">Blog 3</a></li>
-				<li><a href="#">Blog 4</a></li>
-				<li><a href="#">Blog 5</a></li>
-				<li><a href="#">Blog 6</a></li>
+				<?php
+					$result=$blog->getallblogs();
+					while($row = mysqli_fetch_array($result))
+					{
+						echo '<li><a href="/'.$row['b_name'].'">'.$row['b_name']."</a></li>";
+					}
+				?>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->

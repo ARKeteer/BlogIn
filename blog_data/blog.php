@@ -1,21 +1,17 @@
-﻿<!DOCTYPE html>
-<?php
-	ob_start();
-	require_once("includes/UserClass.php");
-	require_once("includes/BlogClass.php");
-	$auth = new Auth();
-	$blog = new Blog();
-	$check=$auth->checkSession();
-	if($check == 0) {
-		header("Location: index.php");
-		exit;
-	}
-	ob_end_clean();
+﻿<?php
+	require_once('includes/UserClass.php');
+	require_once('includes/BlogClass.php');
+	require_once('includes/PostClass.php');
+	
+	$auth=new Auth();
+	$blog=new Blog();
+	$post=new Post();
 ?>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>BlogIn : Dashboard</title>
+    <title>BlogIn : Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -29,7 +25,7 @@
       }
       
     </style>
-    <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -37,11 +33,11 @@
     <![endif]-->
 
     <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="/assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../../assets/ico/favicon.png">
   </head>
 
   <body>
@@ -57,9 +53,14 @@
           <a class="brand" href="#">BlogIn</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-				<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=30"; echo $grav_url; ?>" height="30" width="30"></img>
-              Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
+				<img src="/assets/img/examples/browser-icon-chrome.png" height="30" width="30" class="img-circle"></img>
+				Logged in as <a href="#" class="navbar-link">Username</a>
             </p>
+<!--			<form class="navbar-form pull-right" method="post" action="login.php">
+				<input class="span2" name="email" type="email" placeholder="Email" required>
+				<input class="span2" name="password" type="password" placeholder="Password" required>
+				<button type="submit" class="btn btn-primary">Sign in</button>
+            </form>-->
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#about" role="button" data-toggle="modal">About</a></li>
@@ -71,86 +72,38 @@
     </div>
 
     <div class="container-fluid">
-      <div class="row-fluid">
-        <!-- Do not edit this div except marking any list item as active -->
-		<div class="span3 affix">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list bs-docs-sidenav">
-				<li class="active"><a href="#">Overview</a></li>
-				<li class="nav-header">Settings</li>
-				<li><a href="profile.php">Profile</a></li>
-				<li class="nav-header">Your blogs</li>
-				<li><a href="newblog.php">Create new blog</a></li>
+		<div class="hero-unit">
+			<h2><?php echo $blog->getName(mysql_real_escape_string($_GET['id'])); ?></h2>
+			<p><?php echo $blog->getAbout(mysql_real_escape_string($_GET['id'])); ?></p>
+		</div>
+		<div class="row-fluid">
+			<!-- Do not edit this div except marking any list item as active -->
+			<div class="span9 well pull-left">
 				<?php
-					$result=$blog->getallblogs();
+					$result=$post->getposts(mysql_real_escape_string($_GET['id']));
 					while($row = mysqli_fetch_array($result))
 					{
-						echo '<li><a href="/'.$row['b_name'].'">'.$row['b_name']."</a></li>";
+						echo "<h3>".$row['post_title']."</h3><hr>";
+						echo $row['post_data']."<br>";
 					}
 				?>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9 well pull-right" data-spy="affix" data-offset-top="200">
-            <h2>Dashboard</h2>
-        </div><!--/span-->
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Your profile</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<a class="btn btn-primary pull-right" href="profile.php">Edit profile</a>
-				</div>
 			</div>
-			<br>
-			<div class="row-fluid">
-				<div class="span2">
-					<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=127"; echo $grav_url; ?>" class="img-circle" align="center" height="126" width="126" border="1"></img></br>
-				</div>
-				<div class="span8">
-					<div class="pull-left">
-						<p>Name : <?php echo $auth->getUser()." ".$auth->getLname(); ?></p>
-						<p>Email : <?php echo $auth->getEmail(); ?></p>
-						<p><?php echo $auth->getBio(); ?></p>
-					</div>
-				</div>
+			<div class="span3 well pull-right">
+				Whatever
+			</div><!--/span-->
+			<div class="span3 well pull-right">
+				<!-- Content will Go here -->
+				Whatever
 			</div>
-		</div>
-		<?php
-			$result=$blog->getallblogs();
-			while($row = mysqli_fetch_array($result))
-			{
-				echo '<div class="span9 pull-right well">';
-				echo '<div class="row-fluid">';
-				echo '<div class="span9">';
-				echo '<h3>'.$row["b_name"].'</h3>';
-				echo '</div>';
-				echo '<div class="span3">';
-				echo '<br>';
-				echo '<a class="btn btn-primary pull-right" href="'.$row['b_name'].'/settings.php">Edit settings</a>';
-				echo '</div>';
-				echo '</div>';
-				echo '<div class="tabbable" id="'.$row['b_name'].'"> <!-- Only required for left/right tabs -->';
-				echo '<ul class="nav nav-pills">';
-				echo '<li class="active"><a href="#'.$row['b_name'].'_tab1" data-toggle="tab">Stats</a></li>';
-				echo '<li><a href="#'.$row['b_name'].'_tab2" data-toggle="tab">Comments</a></li>';
-				echo '</ul>';
-				echo '<div class="tab-content">';
-				echo '<div class="tab-pane active" id="'.$row['b_name'].'_tab1">';
-				echo '<p>Your new pageviews and graphs go here.</p>';
-				echo '</div>';
-				echo '<div class="tab-pane" id="'.$row['b_name'].'_tab2">';
-				echo '<p>New and First 3 comments will go here.</p>';
-				echo '</div>';
-				echo '</div>';
-				echo '</div>';
-				echo '</div>';
-			}
-		?>
 		</div><!--/row-->
-
+		<ul class="pager">
+			<li class="next">
+				<a href="#" class="btn btn-primary">Older &rarr;</a>
+			</li>
+			<li class="previous disabled">
+				<a href="#" class="btn btn-primary">&larr; Newer</a>
+			</li>
+		</ul>
       <hr>
 
 <!-- DO NOT EDIT BELOW -->
@@ -222,7 +175,6 @@
     <script src="/assets/js/bootstrap-collapse.js"></script>
     <script src="/assets/js/bootstrap-carousel.js"></script>
     <script src="/assets/js/bootstrap-typeahead.js"></script>
-    <script src="/assets/js/holder/holder.js"></script>
 
   </body>
 </html>

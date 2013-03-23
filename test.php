@@ -10,6 +10,8 @@
 	$blog=new Blog();
 	$auth=new Auth();
 	$post=new Post();
+	
+	$blog->createNew("dshjkhs",2,"jdsbnkjjksb sbhfkjsbkfjhsk kshfhs");
 	/*
 	//if($auth->getUID() == $blog->getOwner())
 	$result=$blog->addAuthor(6,$auth->getUIDbyEmail("aazam@gmail.com"));
@@ -38,7 +40,7 @@
 	
 	
 	$result=$blog->search("blog");
-	*/
+	
 	$result=$post->getposts(6);
 	while($row = mysqli_fetch_array($result))
 			{
@@ -46,7 +48,7 @@
 				echo $row['post_data']."<br><br>";
 			}
 	
-	
+	*/
 	
 	exit;
 	

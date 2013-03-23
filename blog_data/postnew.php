@@ -1,21 +1,29 @@
 ﻿<!DOCTYPE html>
 <?php
 	ob_start();
-	require_once("includes/UserClass.php");
-	require_once("includes/BlogClass.php");
+	require_once("../includes/UserClass.php");
+	require_once("../includes/PostClass.php");
+	require_once("../includes/BlogClass.php");
+	require_once("config.php");
+	
 	$auth = new Auth();
+	$post = new Post();
 	$blog = new Blog();
+	$thisblog = new BlogConfig();
+	$name=$thisblog->getBid();
+	$id=$blog->getID($name);
 	$check=$auth->checkSession();
-	if($check == 0) {
-		header("Location: index.php");
+	if($check == 0 OR $auth->getUID() != $blog->getOwnerID($id)) {
+		header("Location: /index.php");
 		exit;
 	}
+	
 	ob_end_clean();
 ?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>BlogIn : Dashboard</title>
+    <title>BlogIn : Create new Post</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -57,8 +65,8 @@
           <a class="brand" href="#">BlogIn</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-				<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=30"; echo $grav_url; ?>" height="30" width="30"></img>
-              Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
+				<img src="/assets/img/examples/browser-icon-chrome.png" height="30" width="30" class="img-circle"></img>
+              Logged in as <a href="#" class="navbar-link">Username</a>
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
@@ -73,84 +81,55 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <!-- Do not edit this div except marking any list item as active -->
+		
 		<div class="span3 affix">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list bs-docs-sidenav">
-				<li class="active"><a href="#">Overview</a></li>
-				<li class="nav-header">Settings</li>
-				<li><a href="profile.php">Profile</a></li>
-				<li class="nav-header">Your blogs</li>
-				<li><a href="newblog.php">Create new blog</a></li>
-				<?php
-					$result=$blog->getallblogs();
-					while($row = mysqli_fetch_array($result))
-					{
-						echo '<li><a href="/'.$row['b_name'].'">'.$row['b_name']."</a></li>";
-					}
-				?>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9 well pull-right" data-spy="affix" data-offset-top="200">
-            <h2>Dashboard</h2>
-        </div><!--/span-->
-		<div class="span9 pull-right well">
-			<div class="row-fluid">
-				<div class="span9">
-					<h3>Your profile</h3>
-				</div>
-				<div class="span3">
-					<br>
-					<a class="btn btn-primary pull-right" href="profile.php">Edit profile</a>
-				</div>
+			<div class="well text-center">
+				<h2><?php echo $blog->getName(mysql_real_escape_string($id)); ?></h2>
 			</div>
-			<br>
-			<div class="row-fluid">
-				<div class="span2">
-					<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=127"; echo $grav_url; ?>" class="img-circle" align="center" height="126" width="126" border="1"></img></br>
-				</div>
-				<div class="span8">
-					<div class="pull-left">
-						<p>Name : <?php echo $auth->getUser()." ".$auth->getLname(); ?></p>
-						<p>Email : <?php echo $auth->getEmail(); ?></p>
-						<p><?php echo $auth->getBio(); ?></p>
+			<div class="well sidebar-nav bs-docs-sidenav">
+				<ul class="nav nav-list">
+					<li class="nav-header">Posts</li>
+					<li><a href="/posts.php">All posts</a></li>
+					<li class="active"><a href="#">Add new</a></li>
+					
+				</ul>
+			</div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9 well pull-right">
+            <h3>Add new post</h3>
+        </div><!--/span-->
+		<div class="span9 well pull-right">
+			<form method="post" class="form-block well" action="newpost.php" name="newpost">
+				<fieldset>
+					<div class="controls">
+						<input name="post_title" type="text" size="30" class="span9" placeHolder="Enter title here">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#visual" data-toggle="tab">Visual editor</a></li>
+							<li><a href="#htmledit" data-toggle="tab">Edit HTML</a></li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="visual">
+								<textarea tooltip="Post Body" class="input-xlarge" name="post_data" rows="10" style="margin: 0px 0px 10px; width: 820px; height: 250px;"></textarea>
+							</div>
+							<div class="tab-pane" id="htmledit">
+								<!--<textarea tooltip="Post Body" class="input-xlarge" name="post_html" rows="10" style="margin: 0px 0px 10px; width: 820px; height: 250px;"></textarea>-->
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+					<div class="form-actions">
+						<button class="btn btn-primary" type="submit">Create</button>
+						<button class="btn" type="clear">Clear</button>
+					</div>
+				</fieldset>
+			</form>	
 		</div>
-		<?php
-			$result=$blog->getallblogs();
-			while($row = mysqli_fetch_array($result))
-			{
-				echo '<div class="span9 pull-right well">';
-				echo '<div class="row-fluid">';
-				echo '<div class="span9">';
-				echo '<h3>'.$row["b_name"].'</h3>';
-				echo '</div>';
-				echo '<div class="span3">';
-				echo '<br>';
-				echo '<a class="btn btn-primary pull-right" href="'.$row['b_name'].'/settings.php">Edit settings</a>';
-				echo '</div>';
-				echo '</div>';
-				echo '<div class="tabbable" id="'.$row['b_name'].'"> <!-- Only required for left/right tabs -->';
-				echo '<ul class="nav nav-pills">';
-				echo '<li class="active"><a href="#'.$row['b_name'].'_tab1" data-toggle="tab">Stats</a></li>';
-				echo '<li><a href="#'.$row['b_name'].'_tab2" data-toggle="tab">Comments</a></li>';
-				echo '</ul>';
-				echo '<div class="tab-content">';
-				echo '<div class="tab-pane active" id="'.$row['b_name'].'_tab1">';
-				echo '<p>Your new pageviews and graphs go here.</p>';
-				echo '</div>';
-				echo '<div class="tab-pane" id="'.$row['b_name'].'_tab2">';
-				echo '<p>New and First 3 comments will go here.</p>';
-				echo '</div>';
-				echo '</div>';
-				echo '</div>';
-				echo '</div>';
-			}
-		?>
-		</div><!--/row-->
-
+			<!--
+			
+			-->
+			
+        </div>
+      </div><!--/row-->
+</div>
       <hr>
 
 <!-- DO NOT EDIT BELOW -->
@@ -222,7 +201,6 @@
     <script src="/assets/js/bootstrap-collapse.js"></script>
     <script src="/assets/js/bootstrap-carousel.js"></script>
     <script src="/assets/js/bootstrap-typeahead.js"></script>
-    <script src="/assets/js/holder/holder.js"></script>
 
   </body>
 </html>
