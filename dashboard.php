@@ -57,13 +57,14 @@
           <a class="brand" href="#">BlogIn</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-				<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=30"; echo $grav_url; ?>" height="30" width="30"></img>
-              Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
+			<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=30"; echo $grav_url; ?>" height="30" width="30"></img>
+            Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#about" role="button" data-toggle="modal">About</a></li>
               <li><a href="#contact" role="button" data-toggle="modal">Contact</a></li>
+              <li><a href="logout.php" role="button">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -107,7 +108,7 @@
 			<br>
 			<div class="row-fluid">
 				<div class="span2">
-					<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=127"; echo $grav_url; ?>" class="img-circle" align="center" height="126" width="126" border="1"></img></br>
+					<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=127"; echo $grav_url; ?>" align="center" height="126" width="126" border="1"></img></br>
 				</div>
 				<div class="span8">
 					<div class="pull-left">

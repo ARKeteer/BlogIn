@@ -278,5 +278,12 @@
 			$this->temp=mysqli_query($this->con,$this->sqltemp);
 			return $this->temp;
 		}
+	
+		public function logout() {
+			$this->sqltemp="DELETE FROM logged_in_member WHERE session_id='".session_id()."';";
+			$inserted=mysqli_query($this->con,$this->sqltemp);
+			session_destroy();
+			return $result;
+		}
 	}
 ?>
