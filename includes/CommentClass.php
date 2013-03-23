@@ -2,7 +2,7 @@
 	
 	require_once('UserClass.php');
 	require_once('PostClass.php');
-	require_once('AuthClass.php');
+	require_once('UserClass.php');
 	
 	class Comment {
 		private $_siteKey;
