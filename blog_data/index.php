@@ -5,8 +5,8 @@
 	require_once("../includes/PostClass.php");
 	require_once("../includes/BlogClass.php");
 	require_once("../includes/markdown.php");
+	require_once("../includes/html2text.php");
 	require_once("config.php");
-	
 	
 	$auth = new Auth();
 	$post = new Post();
@@ -64,7 +64,7 @@
 				<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=30"; echo $grav_url; ?>" height="30" width="30"></img>
               Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
             </p>
-<!--			<form class="navbar-form pull-right" method="post" action="login.php">
+<!--		<form class="navbar-form pull-right" method="post" action="login.php">
 				<input class="span2" name="email" type="email" placeholder="Email" required>
 				<input class="span2" name="password" type="password" placeholder="Password" required>
 				<button type="submit" class="btn btn-primary">Sign in</button>
@@ -92,16 +92,20 @@
 					while($row = mysqli_fetch_array($result))
 					{
 						echo "<h3><a href='post.php?id=".$row['post_id']."'>".$row['post_title']."</a></h3><div class='pull-right'>".$row['post_date']." ".$row['post_time']."</div>"."<hr>";
-						echo Markdown($row['post_data']."<br>");
+						ob_start();
+						$pos=strpos($row['post_data']," ",500);
+						ob_end_clean();
+						if($pos)
+							echo Markdown(substr($row['post_data'],0,$pos)).".."."<a href='post.php?id=".$row['post_id']."'>Read more</a>";
+						else
+							echo $row['post_data'];
 					}
 				?>
 			</div>
 			<div class="span3 well pull-right">
-				Whatever
-			</div><!--/span-->
-			<div class="span3 well pull-right">
-				<!-- Content will Go here -->
-				Whatever
+			Widget1<hr><br><br><br><br><br><br><br>
+			Widget2<hr><br><br><br><br><br><br><br>
+			Widget3<hr><br><br><br><br><br><br><br>
 			</div>
 		</div><!--/row-->
 		<ul class="pager">

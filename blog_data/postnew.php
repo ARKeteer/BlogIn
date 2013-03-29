@@ -27,9 +27,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <!-- Le styles -->
-    <link href="../../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+	<link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://hallojs.org/css/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/jquery-ui-1.8.16.custom.css" rel="stylesheet">
+
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -37,7 +40,7 @@
       }
       
     </style>
-    <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -105,14 +108,14 @@
 						<input name="post_title" type="text" size="30" class="span9" placeHolder="Enter title here">
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#visual" data-toggle="tab">Visual editor</a></li>
-							<li><a href="#htmledit" data-toggle="tab">Edit HTML</a></li>
+							<li><a href="#htmledit" data-toggle="tab">Edit Markdown source</a></li>
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="visual">
-								<textarea tooltip="Post Body" class="input-xlarge" name="post_data" rows="10" style="margin: 0px 0px 10px; width: 820px; height: 250px;"></textarea>
+								<div class="editable" contenteditable="true"></div>
 							</div>
 							<div class="tab-pane" id="htmledit">
-								<!--<textarea tooltip="Post Body" class="input-xlarge" name="post_html" rows="10" style="margin: 0px 0px 10px; width: 820px; height: 250px;"></textarea>-->
+								<textarea tooltip="Post Body" class="input-xlarge" name="post_data" rows="10" id="source" style="margin: 0px 0px 10px; width: 820px; height: 250px;"></textarea>-->
 							</div>
 						</div>
 					</div>
@@ -188,7 +191,12 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/assets/js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/hallo.js"></script>
+	<script src="/assets/js/showdown.js"></script>
+	<script src="/assets/js/to-markdown.js"></script>
+    <script src="/assets/js/editor.js"></script>
     <script src="/assets/js/bootstrap-transition.js"></script>
     <script src="/assets/js/bootstrap-alert.js"></script>
     <script src="/assets/js/bootstrap-modal.js"></script>
@@ -201,6 +209,5 @@
     <script src="/assets/js/bootstrap-collapse.js"></script>
     <script src="/assets/js/bootstrap-carousel.js"></script>
     <script src="/assets/js/bootstrap-typeahead.js"></script>
-
   </body>
 </html>

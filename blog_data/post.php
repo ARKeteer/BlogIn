@@ -130,11 +130,9 @@
 				</form>
 			</div>
 			<div class="span3 well pull-right">
-				Widget1<br><br><br><br><br><br><br><br><br><br><br><br><br>
-			</div><!--/span-->
-			<div class="span3 well pull-right">
-				<!-- Content will Go here -->
-				Widget2<br><br><br><br><br><br><br><br><br><br><br><br><br>
+				Widget1<hr><br><br><br><br><br><br><br>
+				Widget2<hr><br><br><br><br><br><br><br>
+				Widget3<hr><br><br><br><br><br><br><br>
 			</div>
 		</div><!--/row-->
 		<ul class="pager">
