@@ -68,8 +68,8 @@
           <a class="brand" href="#">BlogIn</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-				<img src="/assets/img/examples/browser-icon-chrome.png" height="30" width="30" class="img-circle"></img>
-              Logged in as <a href="#" class="navbar-link">Username</a>
+			<img src="<?php $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($auth->getEmail())))."?s=30"; echo $grav_url; ?>" height="30" width="30"></img>
+            Logged in as <a href="#" class="navbar-link"><?php echo $auth->getUser(); ?></a>
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
