@@ -49,6 +49,8 @@
 		/* Used for signup page */
 		public function createUser($name, $email, $password)
 		{			
+			if($name=='' || $email='' || $password='')
+				return false;
 			$user_salt = $this->randomString();
 			$password = $user_salt . $password;
 			$password = $this->hashData($password);

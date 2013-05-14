@@ -18,5 +18,8 @@
 		header("Location: index.php?login=1");
 		echo "Thanks for signing up!";
 	}
+	else {
+		header("Location: index.php?signfail=1");
+	}
   }
 ?>

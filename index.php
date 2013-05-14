@@ -83,6 +83,10 @@ echo '<div class="alert alert-success fade in"><button type="button" class="clos
 echo '<div class="alert alert-error fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> It seems that you did some serious mistake.</div> ';
 }
 ?>
+<?php if(isset($_GET['signfail'])) {
+echo '<div class="alert alert-error fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> Please make sure every field is correct!</div> ';
+}
+?>
     <!-- Main hero unit for a primary marketing message or call to action -->
     <div class="hero-unit">
         <h2>Hello, world!</h2>
@@ -119,25 +123,25 @@ echo '<div class="alert alert-error fade in"><button type="button" class="close"
 					<div class="control-group">
 						<label class="control-label" for="input01">Name</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" id="input01" name="name">
+							<input type="text" class="input-xlarge" id="input01" name="name" required>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label h3" for="input02">Email</label>
 						<div class="controls">
-							<input type="email" class="input-xlarge" id="input02" name="email">
+							<input type="email" class="input-xlarge" id="input02" name="email" required>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label h3" for="input03">Password</label>
 						<div class="controls">
-							<input type="password" class="input-xlarge" id="input03" name="password">
+							<input type="password" class="input-xlarge" id="input03" name="password" required>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label h3" for="input04">Retype Password</label>
 						<div class="controls">
-							<input type="password" class="input-xlarge" id="input04" name="retype_paswwd">
+							<input type="password" class="input-xlarge" id="input04" name="retype_paswwd" required>
 						</div>
 					</div>
 					<div class="control-group">
