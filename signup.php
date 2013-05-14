@@ -1,5 +1,5 @@
 ﻿<?php
-  require_once('includes/recaptchalib.php');
+ require_once('includes/recaptchalib.php');
   require_once('includes/UserClass.php');
   $privatekey = "6Lce-t0SAAAAAD3ar0uxPHqUlwwvOrT3NNLgoPUV";
   $resp = recaptcha_check_answer ($privatekey,
@@ -13,7 +13,8 @@
          "(reCAPTCHA said: " . $resp->error . ")");
   } else {
 	$auth = new Auth();
-	$result=$auth->createUser($_POST['name'],$_POST['email'],$_POST['password']);
+	if(!$_POST['name']=='' OR !$_POST['email']=='' OR !$_POST['password']=='')
+		$result=$auth->createUser($_POST['name'],$_POST['email'],$_POST['password']);
 	if($result) {
 		header("Location: index.php?login=1");
 		echo "Thanks for signing up!";
