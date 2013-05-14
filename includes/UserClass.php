@@ -69,9 +69,12 @@
 			
 			$password = $this->selection['user_salt'] . $password;
 			$password = $this->hashData($password);
+			echo $password;
+			
 			$match=false;	
 			//Check email and password hash match database row
-			if($email = $this->selection['email'] AND $password = $this->selection['password']) {
+			if($email == $this->selection['email'] && $password == $this->selection['password']) {
+				echo "Done!";
 				$match=true;
 			}
 				
